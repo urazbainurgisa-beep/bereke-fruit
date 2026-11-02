@@ -1,44 +1,131 @@
-Міне, толық код! Осыны көшіріп алып, сол қара жерге қой:
-
-*1. Жоғары Name your file -> `index.html` деп жаз*
-
-*2. Төмендегі кодты толық көшіріп (басынан аяғына дейін), `Enter file contents here` деген жерге қой:*
-
-<!DOCTYPE html><html lang="kk"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BEREKE~FRUITS</title><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap" rel="stylesheet"><style>:root{--g:#;--bg:#}*{margin:0;padding:0;box-sizing:border-box;font-family:Manrope,sans-serif}body{background:var(--bg);padding-bottom:80px}.top{padding:12px 16px;background:#fff;display:flex;justify-content:space-between;position:sticky;top:0;z-index:9}.brand{font-weight:800;color:var(--g)}.hero{margin:14px;background:#fff;border-radius:20px;padding:16px;display:flex;gap:12px}.hero h1{font-size:22px;font-weight:900}.hero button{background:var(--g);color:#fff;border:none;padding:8px 14px;border-radius:999px;margin-top:8px}.search{margin:10px 16px;background:#fff;border-radius:12px;padding:10px 14px;display:flex;gap:8px;border:1px solid #eee}.search input{flex:1;border:none;outline:none}.cats{display:flex;gap:12px;padding:8px 16px;overflow:auto}.cat{text-align:center;min-width:60px}.cat div{width:50px;height:50px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid #eee;margin:auto}.cat p{font-size:10px;font-weight:600;margin-top:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}.card{background:#fff;border-radius:16px;padding:10px;border:1px solid #eee;position:relative}.card img{width:100%;height:90px;object-fit:cover;border-radius:10px}.add{position:absolute;bottom:10px;right:10px;width:26px;height:26px;border-radius:50%;background:var(--g);color:#fff;border:none;font-weight:900}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0 18px}.nav{font-size:10px;text-align:center;color:#999}.nav.a{color:var(--g)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:50;align-items:flex-end;justify-content:center}.modal.o{display:flex}.sheet{background:#fff;width:100%;max-width:500px;border-radius:20px 20px 0 0;max-height:90vh;overflow:auto;padding:16px}.input{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;margin:6px 0}.btn{border:none;border-radius:10px;padding:11px;width:100%;font-weight:800}.btn-g{background:var(--g);color:#fff}</style></head><body>
-<div class="top"><div class="brand">🌿 BEREKE~FRUITS</div><div style="display:flex;gap:8px"><span onclick="openCart()">🛒<b id="badge">0</b></span><span onclick="openAdmin()">👤</span></div></div>
-<div class="hero"><div style="flex:1"><span style="background:#;color:var(--g);font-size:10px;padding:4px 8px;border-radius:999px;font-weight:700">Жаңа Өнімдер</span><h1>Farm Fresh<br>Jemister</h1><p style="font-size:11px;color:#666;margin-top:4px">Жергілікті фермерлерден тікелей</p><button onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Қазір сатып алу →</button></div><div style="flex:1"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=300" style="width:100%;border-radius:14px"></div></div>
-<div class="search">🔍 <input id="search" placeholder="Жемістер, көкөністер іздеу..." oninput="render()"></div>
-<div class="cats"><div class="cat" onclick="filterCat('')"><div>🍎</div><p>Fruits</p></div><div class="cat" onclick="filterCat('көк')"><div>🥦</div><p>Vegetables</p></div><div class="cat" onclick="filterCat('сүт')"><div>🥛</div><p>Dairy</p></div><div class="cat" onclick="filterCat('қорап')"><div>📦</div><p>Pantry</p></div><div class="cat" onclick="filterCat('жидек')"><div>🍓</div><p>Snacks</p></div></div>
-<div style="padding:12px 16px;display:flex;justify-content:space-between"><h2 style="font-size:15px;font-weight:800">Танымал өнімдер</h2><span style="font-size:11px;color:var(--g)">Барлығын көру →</span></div>
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEREKE~FRUITS — ONLINE STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Manrope,system-ui}
+:root{--green:#1d7a33;--green2:#e8f5e9;--black:#111;--gray:#f6f8f5;--border:#e6efe2}
+body{background:#f4f8f2;color:#111}
+.top{background:linear-gradient(90deg,#0d3f1a,#1d7a33);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:15px}
+.logo small{font-size:10px;font-weight:500;opacity:.9}
+.main{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:14px;padding:14px}
+@media(max-width:900px){.main{grid-template-columns:1fr}}
+.sidebar{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px;position:sticky;top:14px;height:fit-content}
+.cat{padding:10px;border-radius:12px;display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px;font-weight:600;margin-bottom:4px}
+.cat.active{background:var(--green2);color:var(--green)}
+.search{width:100%;border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+.banner{background:linear-gradient(100deg,#eaf8d6,#fff);border:1px solid var(--border);border-radius:18px;padding:18px;display:flex;justify-content:space-between;align-items:center}
+.banner h1{font-size:22px;font-weight:800;line-height:1.1}
+.btn-green{background:var(--green);color:#fff;border:0;padding:10px 16px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:10px;position:relative}
+.card-img{width:100%;height:110px;background:var(--gray);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card h4{font-size:13px;margin:8px 0 2px;min-height:34px}
+.price{font-weight:800;color:var(--green);font-size:14px}
+.unit-select{display:flex;gap:4px;margin:6px 0}
+.unit-select button{border:1px solid var(--border);background:#fff;border-radius:16px;padding:4px 8px;font-size:10px;font-weight:700}
+.unit-select button.active{background:var(--black);color:#fff}
+.add-row{display:flex;gap:6px;margin-top:6px}
+.add-row button{flex:1;border-radius:20px;padding:8px 0;border:0;font-weight:700;font-size:11px;cursor:pointer}
+.btn-cart{background:var(--black);color:#fff}
+.btn-fav{background:#fff;border:1px solid var(--border)!important}
+.heart{position:absolute;top:12px;right:12px;width:26px;height:26px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.lang{display:flex;gap:6px}
+.lang button{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:20px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer}
+.lang button.active{background:#fff;color:var(--green)}
+.header{display:flex;gap:8px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin-bottom:12px;align-items:center}
+.cart-drawer{position:fixed;top:0;right:-380px;width:360px;max-width:92vw;height:100vh;background:#fff;z-index:99;border-left:1px solid var(--border);transition:.25s;padding:14px;display:flex;flex-direction:column}
+.cart-drawer.open{right:0}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;z-index:90}
+.overlay.show{display:block}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:18px;padding:14px;max-width:520px;width:100%}
+.admin{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;margin-top:14px}
+input,select{border:1px solid var(--border);border-radius:10px;padding:10px;font-size:13px;width:100%}
+.small{font-size:11px;color:#6b7f6b}
+.badge{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-size:11px;font-weight:600;flex:1;min-width:140px}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo">🍃 BEREKE~FRUITS<br><small>ONLINE FRUIT & VEGETABLE STORE</small></div>
+<div class="lang"><button id="lkz" class="active" onclick="setLang('kz')">Қазақша</button><button id="lru" onclick="setLang('ru')">Русский</button><div style="margin-left:10px;background:rgba(255,255,255,.15);padding:6px 10px;border-radius:20px;font-size:11px" onclick="openCart()">🛒 <span id="cartCount">0</span></div><div style="background:rgba(255,255,255,.15);padding:6px 10px;border-radius:20px;font-size:11px;margin-left:6px" onclick="openAdmin()">👤</div></div>
+</div>
+<div class="main">
+<div class="sidebar">
+<input id="searchInput" class="search" placeholder="Іздеу... Поиск..." oninput="render()">
+<div style="font-weight:800;font-size:13px;margin-bottom:8px">Категориялар</div>
+<div id="catList"></div>
+<div style="margin-top:12px" class="small">Kaspi: 87058421606<br>WhatsApp осы нөмір<br>Құпия сөз: 1234</div>
+</div>
+<div>
+<div class="header"><input id="searchTop" class="search" style="margin:0;flex:1" placeholder="Алма, банан, жүзім..." oninput="document.getElementById('searchInput').value=this.value;render()"><div class="badge">🚚 12 000₸ тегін</div><div class="badge">% 10 000₸ 5%</div></div>
+<div class="banner"><div><h1>Табиғи өнім –<br>денсаулық кепілі!</h1><p style="font-size:12px;color:#5a6d52;margin:6px 0">Жаңа және пайдалы жемістер мен көкөністер</p><button class="btn-green">Себетке қосу →</button><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><div class="badge">🍃 100% табиғи</div><div class="badge">🚚 Тегін жеткізу</div><div class="badge">% 5% жеңілдік</div></div></div><div style="font-size:60px">🧺</div></div>
+<div style="display:flex;justify-content:space-between;margin-top:14px"><h3>Танымал тауарлар 🔥</h3><span style="font-size:12px">Барлығы →</span></div>
 <div class="grid" id="grid"></div>
-<div style="margin:16px;background:linear-gradient(90deg,#,#);border-radius:14px;padding:12px;display:flex;gap:10px;border:1px solid #"><div>🚚</div><div><b id="delText"></b><br><small style="color:#666">1-2 сағатта жеткіземіз</small></div></div>
-<div class="bottom"><div class="nav a">🏠<br>Басты</div><div class="nav" onclick="document.getElementById('grid').scrollIntoView()">⊞<br>Каталог</div><div class="nav" onclick="openCart()">🛒<br>Себет</div><div class="nav" onclick="openAdmin()">👤<br>Профиль</div></div>
-<div class="modal" id="cartM" onclick="if(event.target===this)closeCart()"><div class="sheet"><div style="display:flex;justify-content:space-between"><h3>Себет</h3><span onclick="closeCart()">✕</span></div><div id="cartList"></div><div id="cartTot" style="margin-top:8px"></div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn" style="background:#eee" onclick="closeCart()">Жабу</button><button class="btn btn-g" onclick="sendWA()">WhatsApp жіберу</button></div></div></div>
-<div class="modal" id="adminM" onclick="if(event.target===this)closeAdmin()"><div class="sheet"><div style="display:flex;justify-content:space-between"><h3>Әкімшілік</h3><span onclick="closeAdmin()">✕</span></div><div id="loginB"><p style="font-size:11px;color:#666">Бас құпия сөз: 1234 | WhatsApp: 87082070140</p><input class="input" id="apass" type="password" placeholder="Құпия сөз"><button class="btn btn-g" onclick="loginA()">Кіру</button></div><div id="panel" style="display:none"><div style="display:flex;gap:6px;margin:8px 0"><button class="btn btn-g" onclick="setT('list')">Тауарлар</button><button class="btn" style="background:#eee" onclick="setT('add')">+ Қосу</button><button class="btn" style="background:#eee" onclick="setT('set')">Баптау</button></div><div id="tab-list"><div id="adminList"></div></div><div id="tab-add" style="display:none"><input class="input" id="pName" placeholder="Аты: Алма..." oninput="autoImg()"><div style="display:flex;gap:6px"><input class="input" id="pPrice" type="number" placeholder="Баға"><select class="input" id="pUnit" style="flex:0 0 80px"><option>кг</option><option>шт</option><option>л</option><option>қорап</option><option>дана</option></select></div><input class="input" id="pImg" placeholder="Сурет ссылкасы автоматты"><button class="btn btn-g" onclick="saveP()">Сақтау</button></div><div id="tab-set" style="display:none"><label style="font-size:11px">WhatsApp номер</label><input class="input" id="sWhats"><label style="font-size:11px">Kaspi</label><input class="input" id="sKaspi"><label style="font-size:11px">Тегін жеткізу</label><input class="input" id="sFree" type="number"><label style="font-size:11px">Жеткізу бағасы</label><input class="input" id="sDel" type="number"><button class="btn btn-g" onclick="saveS()">Сақтау</button></div></div></div></div>
+<div class="admin" id="adminPanel" style="display:none">
+<h3>⚙️ Админка — 1234</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+<div>
+<input id="newName" placeholder="Жаңа тауар аты">
+<div style="display:flex;gap:6px;margin-top:6px"><button class="btn-green" onclick="autoSearch()">🔍 Авто фото іздеу</button><button class="btn-green" style="background:#111" onclick="document.getElementById('fileIn').click()">📷 Фото жүктеу</button><input type="file" id="fileIn" hidden accept="image/*" onchange="handleFile(event)"></div>
+<div id="imgResults" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px"></div>
+<div style="display:flex;gap:6px;margin-top:8px"><input id="newPrice" placeholder="Баға" type="number"><select id="newUnit"><option>кг</option><option>дана</option><option>қорап</option></select><select id="newCat"><option>Жемістер</option><option>Көкөністер</option><option>Жидектер</option><option>Салаттар</option><option>Жаңғақтар</option></select></div>
+<button class="btn-green" style="width:100%;margin-top:8px" onclick="addProduct()">Сақтау</button>
+</div>
+<div><div class="badge">🛒 125 тапсырыс</div><div class="badge" style="margin-top:6px">💰 1 250 000 ₸</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="overlay" id="overlay" onclick="closeCart();closeModal()"></div>
+<div class="cart-drawer" id="drawer"><h3>🛒 Себет <span style="float:right;cursor:pointer" onclick="closeCart()">✕</span></h3><div id="cartItems" style="flex:1;overflow:auto;margin-top:10px"></div><div style="border-top:1px solid var(--border);padding-top:10px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>Сома</span><span id="sum">0 ₸</span></div><div style="display:flex;justify-content:space-between;font-size:13px"><span>Жеңілдік 5%</span><span id="disc">0 ₸</span></div><div style="display:flex;justify-content:space-between;font-size:13px"><span>Жеткізу</span><span id="del">1000 ₸</span></div><div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>Барлығы</span><span id="total">0 ₸</span></div><input id="phone" placeholder="Телефон +7..." style="margin-top:8px"><input id="addr" placeholder="Мекенжай" style="margin-top:6px"><button class="btn-green" style="width:100%;margin-top:8px" onclick="checkoutKaspi()">Kaspi Gold 87058421606 төлеу</button><p class="small">WhatsApp осы нөмірге кетеді</p></div></div>
+<div class="modal" id="imgModal"><div class="modal-box"><img id="modalImg" style="width:100%;border-radius:12px"><h4 id="modalTitle" style="margin-top:8px"></h4><div style="display:flex;gap:6px;margin-top:8px"><button class="btn-green" style="flex:1" onclick="addToCartFromModal()">Себетке қосу</button><button class="btn-green" style="flex:1;background:#111" onclick="closeModal()">Жабу</button></div></div></div>
 <script>
-let settings=JSON.parse(localStorage.getItem('bf_set')||'null')||{whats:'87082070140',kaspi:'87082070140 Kaspi Gold',free:12000,del:500,pass:'1234'};
-let products=JSON.parse(localStorage.getItem('bf_prod')||'null')||[{id:1,name:'Қызыл Алма',price:650,unit:'кг',emoji:'🍎'},{id:2,name:'Банан',price:890,unit:'кг',emoji:'🍌'},{id:3,name:'Мандарин',price:950,unit:'кг',emoji:'🍊'},{id:4,name:'Құлпынай',price:1200,unit:'қорап',emoji:'🍓'},{id:5,name:'Қияр',price:450,unit:'кг',emoji:'🥒'},{id:6,name:'Қызанақ',price:650,unit:'кг',emoji:'🍅'}];
-let cart=JSON.parse(localStorage.getItem('bf_cart')||'[]');let filter='';
-function saveAll(){localStorage.setItem('bf_prod',JSON.stringify(products));localStorage.setItem('bf_cart',JSON.stringify(cart));localStorage.setItem('bf_set',JSON.stringify(settings));}
-function getImg(n){return `https://source.unsplash.com/400x400/?${encodeURIComponent(n)},fruit`;}
-function render(){const q=document.getElementById('search').value.toLowerCase();const g=document.getElementById('grid');g.innerHTML='';products.filter(p=>{if(filter&&!p.name.toLowerCase().includes(filter)&&!p.unit.includes(filter))return false;if(q&&!p.name.toLowerCase().includes(q))return false;return true}).forEach(p=>{const qty=(cart.find(c=>c.id===p.id)||{}).qty||0;const img=p.img||getImg(p.name);g.innerHTML+=`<div class="card"><div style="font-size:9px;color:var(--g);background:#;padding:3px 6px;border-radius:999px;display:inline-block">${p.unit}</div><div style="height:90px;margin:6px 0"><img src="${img}" onerror="this.parentElement.innerHTML='${p.emoji}'"></div><h4 style="font-size:13px;font-weight:800">${p.name}</h4><div style="font-size:12px"><b>${p.price} ₸</b> / ${p.unit}</div><button class="add" onclick="addCart(${p.id})">${qty>0?qty:'+'}</button></div>`});document.getElementById('badge').innerText=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('delText').innerText=`${settings.free.toLocaleString()} ₸-ден бастап жеткізу тегін!`;}
-function filterCat(c){filter=c;render();}
-function addCart(id){let it=cart.find(c=>c.id===id);if(it)it.qty++;else cart.push({id,qty:1});saveAll();render();if(document.getElementById('cartM').classList.contains('o'))renderCart();}
-function changeQty(id,d){let it=cart.find(c=>c.id===id);if(!it)return;it.qty+=d;if(it.qty<=0)cart=cart.filter(c=>c.id!==id);saveAll();render();renderCart();}
-function openCart(){renderCart();document.getElementById('cartM').classList.add('o');}
-function closeCart(){document.getElementById('cartM').classList.remove('o');}
-function renderCart(){const l=document.getElementById('cartList');const t=document.getElementById('cartTot');l.innerHTML='';let total=0;if(cart.length===0){l.innerHTML='<p style="color:#888;font-size:12px">Бос</p>';t.innerHTML='';return;}cart.forEach(c=>{const p=products.find(x=>x.id===c.id);const line=p.price*c.qty;total+=line;l.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee"><div><b style="font-size:13px">${p.name}</b><br><small>${c.qty} ${p.unit} x ${p.price} = ${line}₸</small></div><div style="display:flex;gap:6px;align-items:center"><button onclick="changeQty(${c.id},-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd">-</button><span>${c.qty}</span><button onclick="changeQty(${c.id},1)" style="width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;border:none">+</button></div></div>`;});const del=total>=settings.free?0:settings.del;const grand=total+del;t.innerHTML=`<div>Тауарлар: ${total}₸</div><div>Жеткізу: ${del===0?'<b style="color:green">Тегін</b>':del+'₸'}</div><div style="font-weight:900">Барлығы: ${grand}₸</div>`;}
-function sendWA(){if(cart.length===0)return alert('Бос');let total=0;cart.forEach(c=>{const p=products.find(x=>x.id===c.id);total+=p.price*c.qty});const del=total>=settings.free?0:settings.del;const grand=total+del;let txt=`Сәлем! BEREKE~FRUITS тапсырыс:%0A`;cart.forEach(c=>{const p=products.find(x=>x.id===c.id);txt+=`• ${p.name} ${c.qty}${p.unit} = ${p.price*c.qty}₸%0A`;});txt+=`%0AБарлығы: ${grand}₸%0AKaspi: ${settings.kaspi}`;let num=settings.whats.replace(/[^0-9]/g,'');num=num.startsWith('8')?'7'+num.slice(1):num;window.open(`https://wa.me/${num}?text=${txt}`,'_blank');}
-function openAdmin(){document.getElementById('adminM').classList.add('o');}
-function closeAdmin(){document.getElementById('adminM').classList.remove('o');}
-function loginA(){const p=document.getElementById('apass').value;if(p!==settings.pass)return alert('Қате');document.getElementById('loginB').style.display='none';document.getElementById('panel').style.display='block';renderAdmin();}
-function setT(t){document.getElementById('tab-list').style.display=t==='list'?'block':'none';document.getElementById('tab-add').style.display=t==='add'?'block':'none';document.getElementById('tab-set').style.display=t==='set'?'block':'none';if(t==='set')loadS();}
-function renderAdmin(){const b=document.getElementById('adminList');b.innerHTML='';products.forEach(p=>{b.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee"><span style="font-size:12px">${p.name} ${p.price}₸/${p.unit}</span><span><button onclick="editP(${p.id})">Өзг</button> <button onclick="delP(${p.id})">Өшіру</button></span></div>`});}
-function autoImg(){const n=document.getElementById('pName').value.trim();if(!n)return;document.getElementById('pImg').value=getImg(n);}
-function saveP(){const name=document.getElementById('pName').value.trim();const price=parseInt(document.getElementById('pPrice').value);const unit=document.getElementById('pUnit').value;const img=document.getElementById('pImg').value;if(!name||!price)return alert('Аты, баға');if(window._editId){const p=products.find(x=>x.id===window._editId);p.name=name;p.price=price;p.unit=unit;p.img=img;window._editId=null;}else products.push({id:Date.now(),name,price,unit,img,emoji:'🍏'});saveAll();render();renderAdmin();setT('list');}
-function editP(id){const p=products.find(x=>x.id===id);document.getElementById('pName').value=p.name;document.getElementById('pPrice').value=p.price;document.getElementById('pUnit').value=p.unit;document.getElementById('pImg').value=p.img||'';window._editId=id;setT('add');}
-function delP(id){if(!confirm('Өшіру?'))return;products=products.filter(p=>p.id!==id);cart=cart.filter(c=>c.id!==id);saveAll();render();renderAdmin();}
-function loadS(){document.getElementById('sWhats').value=settings.whats;document.getElementById('sKaspi').value=settings.kaspi;document.getElementById('sFree').value=settings.free;document.getElementById('sDel').value=settings.del;}
-function saveS(){settings.whats=document.getElementById('sWhats').value.trim();settings.kaspi=document.getElementById('sKaspi').value.trim();settings.free=parseInt(document.getElementById('sFree').value)||12000;settings.del=parseInt(document.getElementById('sDel').value)||500;saveAll();render();alert('Сақталды!');}
-render();
-</script></body></html>
+let lang='kz';
+const dict={kz:{cats:["Жемістер","Көкөністер","Жидектер","Салаттар","Жаңғақтар","Азық-түлік"]},ru:{cats:["Фрукты","Овощи","Ягоды","Салаты","Орехи","Бакалея"]}};
+let products=[
+{id:1,kz:"Алма қызыл",ru:"Яблоко красное",price:890,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1568702846914-96b305d2aa34?w=400",stock:24},
+{id:2,kz:"Банан",ru:"Банан",price:1190,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400",stock:30},
+{id:3,kz:"Жүзім Хусайын қара",ru:"Виноград Хусайн черный",price:2490,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1596363507703-77d89aed67f8?w=400",stock:12},
+{id:4,kz:"Жүзім Ақ кишмиш",ru:"Виноград кишмиш белый",price:1890,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1596363507703-77d89aed67f8?w=400",stock:18},
+{id:5,kz:"Жүзім Қызыл",ru:"Виноград красный",price:2190,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1596363507703-77d89aed67f8?w=400",stock:15},
+{id:6,kz:"Қызанақ",ru:"Помидор",price:1290,unit:"кг",cat:"Көкөністер",img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",stock:20},
+{id:7,kz:"Қияр",ru:"Огурец",price:1190,unit:"кг",cat:"Көкөністер",img:"https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400",stock:22},
+{id:8,kz:"Қызыл питахая",ru:"Питахайя красная",price:2400,unit:"кг",cat:"Жемістер",img:"https://images.unsplash.com/photo-1514517315590-0ea5141d6a41?w=400",stock:9},
+{id:9,kz:"Құлпынай",ru:"Клубника",price:1800,unit:"қорап",cat:"Жидектер",img:"https://images.unsplash.com/photo-1543528176-91d2c6d4db1e?w=400",stock:15},
+{id:10,kz:"Салат Айсберг",ru:"Салат Айсберг",price:650,unit:"дана",cat:"Салаттар",img:"https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400",stock:18},
+{id:11,kz:"Жаңғақ",ru:"Орех",price:3200,unit:"кг",cat:"Жаңғақтар",img:"https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400",stock:10},
+{id:12,kz:"Авокадо",ru:"Авокадо",price:900,unit:"дана",cat:"Жемістер",img:"https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=400",stock:25}
+];
+let selectedCat="Барлығы";let cart=[];let fav=new Set();let selectedImg="";let modalProduct=null;
+function setLang(l){lang=l;document.getElementById('lkz').classList.toggle('active',l=='kz');document.getElementById('lru').classList.toggle('active',l=='ru');renderCats();render();}
+function renderCats(){const cats=[(lang=='kz'?"Барлығы":"Все"),...dict[lang].cats];document.getElementById('catList').innerHTML=cats.map(c=>`<div class="cat ${selectedCat==c?'active':''}" onclick="selectCat('${c}')">🍎 ${c}</div>`).join('');}
+function selectCat(c){selectedCat=c;renderCats();render();}
+function render(){const q=(document.getElementById('searchInput').value||"").toLowerCase();const grid=document.getElementById('grid');let list=products.filter(p=>{const name=(lang=='kz'?p.kz:p.ru).toLowerCase();return (!q||name.includes(q))&&(selectedCat=="Барлығы"||selectedCat=="Все"||p.cat==selectedCat);});grid.innerHTML=list.map(p=>`<div class="card" onclick="openImg(${p.id})"><div class="heart" onclick="event.stopPropagation();toggleFav(${p.id})">${fav.has(p.id)?'❤️':'🤍'}</div><div class="card-img"><img src="${p.img}"></div><h4>${lang=='kz'?p.kz:p.ru}</h4><div class="small">Қоймада: ${p.stock} ${p.unit}</div><div class="unit-select"><button class="active">кг</button><button>дана</button><button>қорап</button></div><div class="price">${p.price} ₸ / ${p.unit}</div><div class="add-row"><button class="btn-cart" onclick="event.stopPropagation();addToCart(${p.id})">Себетке қосу</button><button class="btn-fav" onclick="event.stopPropagation();toggleFav(${p.id})">♡</button></div></div>`).join('');}
+function addToCart(id){const p=products.find(x=>x.id==id);let ex=cart.find(c=>c.id==id);if(ex)ex.qty++;else cart.push({id,qty:1,price:p.price,name:lang=='kz'?p.kz:p.ru,img:p.img});updateCart();}
+function updateCart(){document.getElementById('cartCount').innerText=cart.reduce((s,c)=>s+c.qty,0);let sum=cart.reduce((s,c)=>s+c.qty*c.price,0);let disc=sum>10000?Math.round(sum*0.05):0;let del=sum>12000||sum==0?0:1000;let total=sum-disc+del;document.getElementById('sum').innerText=sum+' ₸';document.getElementById('disc').innerText='-'+disc+' ₸';document.getElementById('del').innerText=del==0?'Тегін':del+' ₸';document.getElementById('total').innerText=total+' ₸';document.getElementById('cartItems').innerHTML=cart.map(c=>`<div style="display:flex;gap:8px;margin-bottom:8px;border-bottom:1px solid #eef2e8;padding-bottom:8px"><img src="${c.img}" style="width:48px;height:48px;border-radius:8px;object-fit:cover"><div style="flex:1"><b style="font-size:12px">${c.name}</b><br><span class="small">${c.price} ₸ x ${c.qty}</span></div><div><button onclick="changeQty(${c.id},-1)">-</button> ${c.qty} <button onclick="changeQty(${c.id},1)">+</button></div></div>`).join('')||'<p class="small">Себет бос</p>';}
+function changeQty(id,d){let c=cart.find(x=>x.id==id);if(!c)return;c.qty+=d;if(c.qty<=0)cart=cart.filter(x=>x.id!=id);updateCart();}
+function openCart(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show');}
+function closeCart(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+function openImg(id){const p=products.find(x=>x.id==id);modalProduct=p;document.getElementById('modalImg').src=p.img;document.getElementById('modalTitle').innerText=(lang=='kz'?p.kz:p.ru)+' — '+p.price+' ₸';document.getElementById('imgModal').classList.add('show');document.getElementById('overlay').classList.add('show');}
+function closeModal(){document.getElementById('imgModal').classList.remove('show');document.getElementById('overlay').classList.remove('show');}
+function addToCartFromModal(){if(modalProduct)addToCart(modalProduct.id);closeModal();openCart();}
+function toggleFav(id){if(fav.has(id))fav.delete(id);else fav.add(id);render();}
+function autoSearch(){const name=document.getElementById('newName').value||'fruit';const q=encodeURIComponent(name);const box=document.getElementById('imgResults');box.innerHTML='';for(let i=0;i<6;i++){let url=`https://source.unsplash.com/200x200/?${q},fruit&sig=${i+Math.random()}`;box.innerHTML+=`<div style="border:1px solid #e6efe2;border-radius:10px;overflow:hidden;cursor:pointer" onclick="pickImg('${url}')"><img src="${url}" style="width:100%;height:80px;object-fit:cover"></div>`;}}
+function pickImg(url){selectedImg=url;document.getElementById('imgResults').innerHTML=`<img src="${url}" style="width:100%;border-radius:10px;border:2px solid #1d7a33"><p class=small>Таңдалды! Сақтау бас</p>`;}
+function handleFile(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{selectedImg=ev.target.result;document.getElementById('imgResults').innerHTML=`<img src="${selectedImg}" style="width:100%;border-radius:10px">`;};reader.readAsDataURL(file);}
+function addProduct(){const name=document.getElementById('newName').value;const price=parseInt(document.getElementById('newPrice').value)||0;const unit=document.getElementById('newUnit').value;const cat=document.getElementById('newCat').value;if(!name||!price||!selectedImg){alert('Аты, бағасы, фото керек');return;}products.unshift({id:Date.now(),kz:name,ru:name,price,unit,cat,img:selectedImg,stock:100});render();document.getElementById('newName').value='';document.getElementById('newPrice').value='';selectedImg='';document.getElementById('imgResults').innerHTML='';}
+function openAdmin(){const pass=prompt('Құпия сөз (1234):');if(pass=='1234')document.getElementById('adminPanel').style.display='block';}
+function checkoutKaspi(){const total=document.getElementById('total').innerText;const phone=document.getElementById('phone').value;if(!phone){alert('Телефон жазыңыз');return;}const msg=`BEREKE~FRUITS тапсырыс:%0A${cart.map(c=>c.name+' x'+c.qty).join('%0A')}%0AБарлығы: ${total}%0AТел: ${phone}%0AМекенжай: ${document.getElementById('addr').value}`;window.open(`https://wa.me/77058421606?text=${msg}`,'_blank');}
+setLang('kz');renderCats();render();
+</script>
+</body>
+</html>
